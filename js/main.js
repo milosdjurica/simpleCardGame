@@ -37,6 +37,7 @@ function play() {
       let val1 = toNum(data.cards[0].value)
       let val2 = toNum(data.cards[1].value)
       compare(val1, val2)
+      checkWinner()
     })
     .catch(err => {
       console.log(`error ${err}`)
@@ -50,6 +51,7 @@ function pics(data) {
   document.querySelector("#player2").src = data.cards[1].image
 }
 
+
 // count rounds left
 function countRounds(data) {
   if (data.remaining != 0) {
@@ -58,6 +60,7 @@ function countRounds(data) {
     alert("LAST ROUND")
   }
 }
+
 
 // converts into numbers for easier comparing
 function toNum(val) {
@@ -92,6 +95,7 @@ function compare(val1, val2) {
   }
 }
 
+
 // count total number of won cards by player, and puts it into their h3 tag
 function putInWinner(player) {
   if (player === 1) {
@@ -100,5 +104,14 @@ function putInWinner(player) {
   } else {
     totalNumSecond += numOfCards + 2
     document.querySelector(`.two h3`).innerText = `Player two total number of cards is : ${totalNumSecond}`
+  }
+}
+
+
+function checkWinner(){
+  if(totalNumFirst>26){
+    alert("WINNER IS PLAYER 1")
+  }else if(totalNumSecond>26){
+    alert("WINNER IS PLAYER 2")
   }
 }
