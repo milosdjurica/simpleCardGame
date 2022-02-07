@@ -11,16 +11,46 @@
 /* LAYOUT
 /*******************************************/
 body{
+  background:rgb(50, 50, 187);
+  color:white;
   display:flex;
-  flex-flow: row wrap;
-  justify-content:space-around;
+  flex-flow: column nowrap;
+}
+
+.starter{
+  width:100%;
+  display:flex;
+  flex-flow: column nowrap;
+  /* justify-content:center; */
+  /* align-items: center; */
+}
+
+.round{
+  display:flex;
+  flex-flow:row nowrap;
+}
+
+.versus{
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content:center;
+  align-items: center;
+}
+
+
+h1, h2, h3, p{
+  display:flex;
+  justify-content: center;
+}
+p{
+  font-size:20px;
+  font-weight:bold;
 }
 
 .player{
   width:40%;
-  /* background:red; */
   display:flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
   align-items: center;
 }
 
@@ -33,18 +63,18 @@ body{
 
 
 button{
-  height:100px;
-  width:50%
+  height:200px;
+  width:200px;
+  border-radius:50%;
+  background:rgb(231, 48, 48);
+  font-size:30px;
+  font-weight:bold;
 }
 
 img{
   height: 200px;
 }
 
-h2, h3{
-  display:flex;
-  justify-content: center;
-}
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
