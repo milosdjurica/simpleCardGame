@@ -4,7 +4,40 @@ let deckId
 let numOfCards = 0
 let totalNumFirst = 0
 let totalNumSecond = 0
-document.querySelector('button').addEventListener('click', play)
+document.querySelector('.choose1').addEventListener("click", playNormal)
+document.querySelector('.choose2').addEventListener("click", playPoints)
+
+
+
+function playNormal(){
+  showHideElements()
+  document.querySelector('.rule3').classList.toggle("hidden")
+  document.querySelector('button').addEventListener('click', play)
+}
+
+function playPoints(){
+  showHideElements()
+  document.querySelector('.rule4').classList.toggle("hidden")
+  document.querySelector('button').addEventListener('click', playPts)
+}
+
+function showHideElements(){
+  // hide
+  document.querySelector('h2').classList.toggle("hidden")
+  document.querySelector('p').classList.toggle("hidden")
+  document.querySelector('.choose2').classList.toggle("hidden")
+  // show
+  document.querySelector('h3').classList.toggle("hidden")
+  document.querySelector('.rule1').classList.toggle("hidden")
+  document.querySelector('.rule2').classList.toggle("hidden")
+
+}
+
+
+function playPts(){
+  // TO DO..............
+}
+
 
 // saving deck in local storage so we can use same deck every time
 // if deck isnt saved we are saving it 

@@ -20,6 +20,14 @@ body{
   flex-flow: column nowrap;
 }
 
+.choose1:hover, .choose2:hover{
+  color: red; 
+}
+
+.hidden{
+  display:none;
+}
+
 .starter{
   width:100%;
   display:flex;
