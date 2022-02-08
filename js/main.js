@@ -58,6 +58,7 @@ function countRounds(data) {
     document.querySelector("h4").innerText = `Remaining number of rounds : ${data.remaining / 2}`
   } else {
     alert("LAST ROUND")
+    document.querySelector("h4").innerText = `Remaining number of rounds : 0`
   }
 }
 

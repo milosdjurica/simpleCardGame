@@ -11,7 +11,10 @@
 /* LAYOUT
 /*******************************************/
 body{
-  background:rgb(50, 50, 187);
+  background-image: url("../img/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: -300px;
   color:white;
   display:flex;
   flex-flow: column nowrap;
@@ -73,6 +76,7 @@ button{
 
 img{
   height: 200px;
+  border:1px solid red;
 }
 
 /******************************************
