@@ -30,19 +30,19 @@ if (!localStorage.getItem("deckId")) {
 
 
 
-function playNormal(){
+function playNormal() {
   showHideElements()
   document.querySelector('.rule3').classList.toggle("hidden")
   document.querySelector('button').addEventListener('click', play)
 }
 
-function playPoints(){
+function playPoints() {
   showHideElements()
   document.querySelector('.rule4').classList.toggle("hidden")
   document.querySelector('button').addEventListener('click', playPts)
 }
 
-function showHideElements(){
+function showHideElements() {
   // hide
   document.querySelector('h2').classList.toggle("hidden")
   document.querySelector('p').classList.toggle("hidden")
@@ -140,17 +140,17 @@ function putInWinner(player) {
 }
 
 
-function checkWinner(){
-  if(totalNumFirst>26){
+function checkWinner() {
+  if (totalNumFirst > 26) {
     alert("WINNER IS PLAYER 1")
-  }else if(totalNumSecond>26){
+  } else if (totalNumSecond > 26) {
     alert("WINNER IS PLAYER 2")
   }
 }
 
 
 // PLAY COUNTING POINTS ........................................................................................................
-function playPts(){
+function playPts() {
   // pulls 2 cards
   const url = `http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
   fetch(url)
@@ -172,57 +172,57 @@ function playPts(){
 
 // comparing card values and calls winner for points
 function comparePoints(val1, val2) {
-if (val1 > val2) {
-  document.querySelector(".mid h3").innerText = "Winner of round is player 1"
-  putInWinnerPoints(1, val1, val2)
-  numOfCards = 0
-} else if (val1 < val2) {
-  document.querySelector(".mid h3").innerText = "Winner of round is player 2"
-  putInWinnerPoints(2, val1, val2)
-  numOfCards = 0
-} else {
-  // if goes into  that means it is TIE, so winner of next round takes cards from this round and next one 
-  document.querySelector(".mid h3").innerText = "WAR"
+  if (val1 > val2) {
+    document.querySelector(".mid h3").innerText = "Winner of round is player 1"
+    putInWinnerPoints(1, val1, val2)
+    numOfCards = 0
+  } else if (val1 < val2) {
+    document.querySelector(".mid h3").innerText = "Winner of round is player 2"
+    putInWinnerPoints(2, val1, val2)
+    numOfCards = 0
+  } else {
+    // if goes into  that means it is TIE, so winner of next round takes cards from this round and next one 
+    document.querySelector(".mid h3").innerText = "WAR"
 
-  if(val1>10){
-    val1 = 10
-  }else if(val2>10){
-    val2 = 10
+    if (val1 > 10) {
+      val1 = 10
+    } else if (val2 > 10) {
+      val2 = 10
+    }
+    numOfCards += val1 + val2
   }
-  numOfCards += val1 + val2    
-}
 }
 
 
 // count total number of won points by player, and puts it into their h3 tag
 function putInWinnerPoints(player, val1, val2) {
-if (player === 1) {
-  if(val1>10){
-    val1 = 10
-  }else if(val2>10){
-    val2 = 10
+  if (player === 1) {
+    if (val1 > 10) {
+      val1 = 10
+    } else if (val2 > 10) {
+      val2 = 10
+    }
+
+    totalNumFirst += numOfCards + val1 + val2
+    document.querySelector(`.one h3`).innerText = `Player one total number of points is : ${totalNumFirst}`
+  } else {
+    if (val1 > 10) {
+      val1 = 10
+    } else if (val2 > 10) {
+      val2 = 10
+    }
+
+    totalNumSecond += numOfCards + val1 + val2
+    document.querySelector(`.two h3`).innerText = `Player two total number of points is : ${totalNumSecond}`
   }
+}
 
-  totalNumFirst += numOfCards + val1 + val2
-  document.querySelector(`.one h3`).innerText = `Player one total number of points is : ${totalNumFirst}`
-} else {
-  if(val1>10){
-    val1 = 10
-  }else if(val2>10){
-    val2 = 10
+
+function checkWinnerPoints() {
+  if (totalNumFirst > 188) {
+    alert("WINNER IS PLAYER 1")
+  } else if (totalNumSecond > 188) {
+    alert("WINNER IS PLAYER 2")
   }
-
-  totalNumSecond += numOfCards + val1 + val2
-  document.querySelector(`.two h3`).innerText = `Player two total number of points is : ${totalNumSecond}`
-}
-}
-
-
-function checkWinnerPoints(){
-if(totalNumFirst>188){
-  alert("WINNER IS PLAYER 1")
-}else if(totalNumSecond>188){
-  alert("WINNER IS PLAYER 2")
-}
 }
 
