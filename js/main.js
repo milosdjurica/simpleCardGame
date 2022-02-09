@@ -8,6 +8,27 @@ document.querySelector('.choose1').addEventListener("click", playNormal)
 document.querySelector('.choose2').addEventListener("click", playPoints)
 
 
+// START ......................................................................
+// saving deck in local storage so we can use same deck every time
+// if deck isnt saved we are saving it 
+if (!localStorage.getItem("deckId")) {
+  fetch("http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+    .then(res => res.json()) // parse response as JSON
+    .then(data => {
+      deckId = data.deck_id
+      localStorage.setItem("deckId", deckId)
+    })
+    .catch(err => {
+      console.log(`error ${err}`)
+    });
+  // if deck is saved we just shuffle it
+} else {
+  deckId = localStorage.getItem("deckId")
+  fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+}
+
+
+
 
 function playNormal(){
   showHideElements()
@@ -34,30 +55,7 @@ function showHideElements(){
 }
 
 
-function playPts(){
-  // TO DO..............
-}
-
-
-// saving deck in local storage so we can use same deck every time
-// if deck isnt saved we are saving it 
-if (!localStorage.getItem("deckId")) {
-  fetch("http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-    .then(res => res.json()) // parse response as JSON
-    .then(data => {
-      deckId = data.deck_id
-      localStorage.setItem("deckId", deckId)
-    })
-    .catch(err => {
-      console.log(`error ${err}`)
-    });
-  // if deck is saved we just shuffle it
-} else {
-  deckId = localStorage.getItem("deckId")
-  fetch(`http://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
-}
-
-
+// PLAY NORMAL ..................................................................................................
 function play() {
   // pulls 2 cards
   const url = `http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
@@ -85,7 +83,7 @@ function pics(data) {
 }
 
 
-// count rounds left
+// count remaining rounds
 function countRounds(data) {
   if (data.remaining != 0) {
     document.querySelector("h4").innerText = `Remaining number of rounds : ${data.remaining / 2}`
@@ -149,3 +147,82 @@ function checkWinner(){
     alert("WINNER IS PLAYER 2")
   }
 }
+
+
+// PLAY COUNTING POINTS ........................................................................................................
+function playPts(){
+  // pulls 2 cards
+  const url = `http://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
+  fetch(url)
+    .then(res => res.json()) // parse response as JSON
+    .then(data => {
+      pics(data)
+      countRounds(data)
+      // For easier comparison toNum changes values ACE -> 15, KING ->14, etc..
+      let val1 = toNum(data.cards[0].value)
+      let val2 = toNum(data.cards[1].value)
+      comparePoints(val1, val2)
+      checkWinnerPoints()
+    })
+    .catch(err => {
+      console.log(`error ${err}`)
+    });
+
+}
+
+// comparing card values and calls winner for points
+function comparePoints(val1, val2) {
+if (val1 > val2) {
+  document.querySelector(".mid h3").innerText = "Winner of round is player 1"
+  putInWinnerPoints(1, val1, val2)
+  numOfCards = 0
+} else if (val1 < val2) {
+  document.querySelector(".mid h3").innerText = "Winner of round is player 2"
+  putInWinnerPoints(2, val1, val2)
+  numOfCards = 0
+} else {
+  // if goes into  that means it is TIE, so winner of next round takes cards from this round and next one 
+  document.querySelector(".mid h3").innerText = "WAR"
+
+  if(val1>10){
+    val1 = 10
+  }else if(val2>10){
+    val2 = 10
+  }
+  numOfCards += val1 + val2    
+}
+}
+
+
+// count total number of won points by player, and puts it into their h3 tag
+function putInWinnerPoints(player, val1, val2) {
+if (player === 1) {
+  if(val1>10){
+    val1 = 10
+  }else if(val2>10){
+    val2 = 10
+  }
+
+  totalNumFirst += numOfCards + val1 + val2
+  document.querySelector(`.one h3`).innerText = `Player one total number of points is : ${totalNumFirst}`
+} else {
+  if(val1>10){
+    val1 = 10
+  }else if(val2>10){
+    val2 = 10
+  }
+
+  totalNumSecond += numOfCards + val1 + val2
+  document.querySelector(`.two h3`).innerText = `Player two total number of points is : ${totalNumSecond}`
+}
+}
+
+
+function checkWinnerPoints(){
+if(totalNumFirst>188){
+  alert("WINNER IS PLAYER 1")
+}else if(totalNumSecond>188){
+  alert("WINNER IS PLAYER 2")
+}
+}
+
