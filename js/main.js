@@ -1,6 +1,6 @@
 // Get a deck
 let deckId
-// remember number of cards if WAR
+// remember number of cards/points (from this round) if it is tie
 let numOfCards = 0
 let totalNumFirst = 0
 let totalNumSecond = 0
@@ -122,7 +122,7 @@ function compare(val1, val2) {
     numOfCards = 0
   } else {
     // if goes into  that means it is TIE, so winner of next round takes cards from this round and next one 
-    document.querySelector(".mid h3").innerText = "WAR"
+    document.querySelector(".mid h3").innerText = "It is tied. Winner of next round also takes cards from this round."
     numOfCards += 2
   }
 }
@@ -182,7 +182,7 @@ function comparePoints(val1, val2) {
     numOfCards = 0
   } else {
     // if goes into  that means it is TIE, so winner of next round takes cards from this round and next one 
-    document.querySelector(".mid h3").innerText = "WAR"
+    document.querySelector(".mid h3").innerText = "It is tied. Winner of next round also takes cards from this round."
 
     if (val1 > 10) {
       val1 = 10
